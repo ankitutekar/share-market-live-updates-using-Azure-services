@@ -1,0 +1,34 @@
+.App {
+  text-align: center;
+}
+
+.font-weight-bold {
+  font-weight: bold !important;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.color-green {
+  color: green !important;
+}
+
+.color-red {
+  color: red !important;
+}
+
+.low-opacity {
+  opacity: 0.9;
+}
+
+.animate {
+  display: inline-block;
+  transition: background-color 3s ease-in-out, box-shadow 3s ease-in-out, opacity 3s ease-in-out;
+}
+
+.animate.glow {
+  background-color: aliceblue;
+  box-shadow: 0 0 5px #515151;
+  opacity: 1.0;
+}
