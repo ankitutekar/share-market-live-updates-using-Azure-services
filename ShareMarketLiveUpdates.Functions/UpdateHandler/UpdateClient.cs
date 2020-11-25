@@ -13,28 +13,39 @@ namespace ShareMarketLiveUpdates.Functions
 {
     public static class UpdateClient
     {
+        /**********************************************
+         - CosmosDB Trigger - Function is triggered
+           whenever any changes are made in specified
+           Cosmos DB collection, receives updated 
+           records in input parameter
+         - SignalR output binding - Updated records are 
+           returned to SignalR server, to be returned 
+           to clients 
+        **********************************************/
         [FunctionName("UpdateClient")]
         public static async Task Run([CosmosDBTrigger(
             databaseName: "cosmos-for-share-market-updates",
             collectionName: "Shares",
             ConnectionStringSetting = "cosmosforsharemarketupdates_DOCUMENTDB",
             LeaseCollectionName = "leases",
-            CreateLeaseCollectionIfNotExists = true)]IReadOnlyList<Document> input,
+            CreateLeaseCollectionIfNotExists = true)]IReadOnlyList<Document> updatedDocs,
             [SignalR(HubName = "notifications")] IAsyncCollector<SignalRMessage> signalRMessages,
             ILogger log)
             {
 
-                log.LogInformation("Documents modified " + input.Count);
-                log.LogInformation("First document Id " + input[0].Id);
+                log.LogInformation("Documents modified " + updatedDocs.Count);
+                log.LogInformation("First document Id " + updatedDocs[0].Id);
+                
                 var updatedShares = new List<ShareInfo>();
-                foreach (var item in input)
+                foreach (var item in updatedDocs)
                 {
                    updatedShares.Add(JsonConvert.DeserializeObject<ShareInfo>(item.ToString())); 
                 }
+
                 await signalRMessages.AddAsync(
                 new SignalRMessage
                 {
-                    Target = "shareUpdated",
+                    Target = "shareUpdated", //name of client function to be called
                     Arguments = new[] { updatedShares }
                 });
             }

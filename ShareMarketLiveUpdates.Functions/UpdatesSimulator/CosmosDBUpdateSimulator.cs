@@ -13,6 +13,14 @@ namespace ShareMarketLiveUpdates.Functions
                                       "Charles Chips", "Coke and Burgers", "Freddy's Fries" };
         static Random _randomNumberGenerator = new Random();
 
+         /**********************************************
+         - TimerTrigger - Called after specified timer 
+           interval
+         - Cosmos DB input binding - Fetches shares data
+           from specified CosmosDB connection
+         - Cosmos DB output binding - Updates a random share
+           and writes to specified CosmosDB collection
+        ***************************************************/
         [FunctionName("CosmosDBUpdateSimulator")]
         public static void Run([TimerTrigger("*/15 * * * * *")]TimerInfo myTimer, //trigger
             [CosmosDB( //input binding

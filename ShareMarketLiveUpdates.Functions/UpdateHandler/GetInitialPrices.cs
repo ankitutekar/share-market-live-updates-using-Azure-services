@@ -10,6 +10,13 @@ namespace ShareMarketLiveUpdates.Functions.UpdateHandler
 {
     public class GetInitialPrices
     {
+         /**********************************************
+         - HttpTrigger - Called from clients for 
+           getting initial share prices, when page is 
+           loaded
+         - Cosmos DB input binding - Fetches shares data
+           from specified CosmosDB connection
+        **********************************************/
         [FunctionName("GetInitialPrices")]
          public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous)] HttpRequest req,

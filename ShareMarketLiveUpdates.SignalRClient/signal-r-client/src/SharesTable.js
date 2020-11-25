@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SharesTable( {shares, updatedShareId}) {
+export default function SharesTable({shares, updatedShareId}) {
   const classes = useStyles();
 
   return (
