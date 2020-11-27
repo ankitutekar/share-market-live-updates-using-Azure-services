@@ -33,9 +33,9 @@ namespace ShareMarketLiveUpdates.Functions
             ILogger log)
             {
 
-                log.LogInformation("Documents modified " + updatedDocs.Count);
-                log.LogInformation("First document Id " + updatedDocs[0].Id);
-                
+                log.LogInformation("Number of shares updated: " + updatedDocs.Count);
+                log.LogInformation("First updated share Id: " + updatedDocs[0].Id);
+
                 var updatedShares = new List<ShareInfo>();
                 foreach (var item in updatedDocs)
                 {
