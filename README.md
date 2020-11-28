@@ -32,7 +32,7 @@ Process overview -
 <h3>Learnings have been documented on my blog - </h3>
   <ul>
     <li><a href="https://www.learningstuffwithankit.dev/making-sense-of-faas-by-learning-about-azure-functions-part-i">Making sense of FaaS by learning about Azure Functions – Part I</a></li>
-    <li>Part II coming soon!!!</li>
+    <li><a href="https://www.learningstuffwithankit.dev/making-sense-of-faas-by-learning-about-azure-functions-part-ii">Making sense of FaaS by learning about Azure Functions – Part II</a></li>
   </ul>
 <h3>Want to setup locally and play with it? </h3>
 <p>You will need to have basic familarity with dotnetcore development. This being a serverless app(except the client part, which can be hosted on Azure too!), you will need to create required Azure resources.
