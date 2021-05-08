@@ -6,7 +6,6 @@ on:
       - master
 
 env:
-  OUTPUT_PATH: ${{ github.workspace }}/.output
   DOTNET_VERSION: '3.1.100'
   AZURE_FUNCTIONAPP_NAME: sharemarketliveupdates
   AZURE_FUNCTIONAPP_PACKAGE_PATH: '../../ShareMarketLiveUpdates.Functions'
@@ -26,7 +25,8 @@ jobs:
         - name: 'Resolve Project Dependencies and Build'
           shell: pwsh
           run: |
-            pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+            popd
+            pushd '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
             dotnet build --configuration Release --output ./output
             popd
 
