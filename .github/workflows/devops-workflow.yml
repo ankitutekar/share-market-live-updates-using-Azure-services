@@ -50,15 +50,14 @@ jobs:
           uses: actions/setup-node@v1
           with:
             node-version: ${{ env.NODE_VERSION }}
-        - name: npm install, build, and test
+        - name: npm install and build
           shell: pwsh
           run: |
             pushd './${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
-            # Build and test the project, then
+            # Build the project, then
             # deploy to Azure Web App.
             npm install
-            npm run build --if-present
-            npm run test --if-present
+            npm run build
             echo '{ script: "serve", env: { PM2_SERVE_SPA: "true", PM2_SERVE_HOMEPAGE: "/index.html" } }' >> build/process.json
         - name: 'Deploy to Azure WebApp'
           uses: azure/webapps-deploy@v2
