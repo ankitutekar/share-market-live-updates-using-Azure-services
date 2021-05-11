@@ -29,7 +29,7 @@ const App = () => {
 
   useEffect( () => {
     if(!connection) {
-    fetch('http://localhost:5055/api/GetInitialPrices')
+    fetch(`${process.env.REACT_APP_FUNCTIONAPP_BASE_URL}/GetInitialPrices`)
       .then(response => response.json())
       .then(data => {
           setShares(data);
