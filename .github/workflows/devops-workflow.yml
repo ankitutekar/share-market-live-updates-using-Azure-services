@@ -1,4 +1,4 @@
-name: Build and Deploy Azure Function App
+name: Build and Deploy share market live update projects
 
 on:
   push:
@@ -7,11 +7,15 @@ on:
 
 env:
   DOTNET_VERSION: '3.1.100'
+  NODE_VERSION: '14.x'
   AZURE_FUNCTIONAPP_NAME: sharemarketliveupdates
   AZURE_FUNCTIONAPP_PACKAGE_PATH: 'ShareMarketLiveUpdates.Functions'
+  AZURE_WEBAPP_NAME: sharemarketupdates
+  AZURE_WEBAPP_PACKAGE_PATH: 'ShareMarketLiveUpdates.SignalRReactClient/signal-r-client'
 
 jobs:
-  build-and-deploy:
+  build-and-deploy-function-app:
+    name: Build & deploy Function App
     runs-on: windows-latest
     steps:
         - name: 'Checkout'
@@ -36,3 +40,30 @@ jobs:
             app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
             package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
             publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
+
+  build-and-deploy-react-client:
+    name: Build & deploy React client app
+    runs-on: windows-latest
+    steps:
+        - uses: actions/checkout@v2
+        - name: Use Node.js ${{ env.NODE_VERSION }}
+          uses: actions/setup-node@v1
+          with:
+            node-version: ${{ env.NODE_VERSION }}
+        - name: npm install, build, and test
+          shell: pwsh
+          run: |
+            pushd './${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+            # Build and test the project, then
+            # deploy to Azure Web App.
+            npm install
+            npm run build --if-present
+            npm run test --if-present
+            echo '{ script: "serve", env: { PM2_SERVE_SPA: "true", PM2_SERVE_HOMEPAGE: "/index.html" } }' >> build/process.json
+        - name: 'Deploy to Azure WebApp'
+          uses: azure/webapps-deploy@v2
+          with:
+            app-name: ${{ env.AZURE_WEBAPP_NAME }}
+            publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+            package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/build'
+
