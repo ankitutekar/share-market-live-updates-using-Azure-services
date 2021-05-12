@@ -18,7 +18,7 @@ jobs:
     name: Build & deploy Function App
     runs-on: windows-latest
     steps:
-        - name: 'Checkout'
+        - name: Checkout
           uses: actions/checkout@master
 
         - name: Setup Dotnet ${{ env.DOTNET_VERSION }} Environment
@@ -26,14 +26,14 @@ jobs:
           with:
               dotnet-version: ${{ env.DOTNET_VERSION }}
 
-        - name: 'Resolve Project Dependencies and Build'
+        - name: Resolve Project Dependencies and Build
           shell: pwsh
           run: |
             pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
             dotnet build --configuration Release --output ./output
             popd
 
-        - name: 'Run Azure Functions Action'
+        - name: Run Azure Functions Action
           uses: Azure/functions-action@v1
           id: fa
           with:
@@ -45,13 +45,17 @@ jobs:
     name: Build & deploy React client app
     runs-on: windows-latest
     steps:
-        - uses: actions/checkout@v2
+        - name: Checkout
+          uses: actions/checkout@master
+
         - name: Use Node.js ${{ env.NODE_VERSION }}
           uses: actions/setup-node@v1
           with:
             node-version: ${{ env.NODE_VERSION }}
         - name: npm install and build
           shell: pwsh
+          env:
+            REACT_APP_FUNCTIONAPP_BASE_URL: ${{ secrets.REACT_APP_FUNCTIONAPP_BASE_URL }}
           run: |
             pushd './${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
             # Build the project, then
