@@ -22,7 +22,7 @@ namespace ShareMarketLiveUpdates.Functions
            and writes to specified CosmosDB collection
         ***************************************************/
         [FunctionName("CosmosDBUpdateSimulator")]
-        public static void Run([TimerTrigger("*/15 * * * * *")]TimerInfo myTimer, //trigger
+        public static void Run([TimerTrigger("%UpdateSimulatorSchedule%")]TimerInfo myTimer, //trigger
             [CosmosDB( //input binding
             databaseName: "cosmos-for-share-market-updates",
             collectionName: "Shares",

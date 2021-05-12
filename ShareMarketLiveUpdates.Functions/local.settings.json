@@ -4,7 +4,8 @@
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
     "cosmosforsharemarketupdates_DOCUMENTDB": "AccountEndpoint={copy-paste your Cosmos DB connection string from Azure account}",
-    "AzureSignalRConnectionString": "Endpoint={{copy-paste your Signal-R connection string from Azure account}}"
+    "AzureSignalRConnectionString": "Endpoint={{copy-paste your Signal-R connection string from Azure account}}",
+    "UpdateSimulatorSchedule": "*/15 * * * * *"
   },
   "Host": {
     "LocalHttpPort": 5055,
